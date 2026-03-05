@@ -47,17 +47,41 @@ body {
 }
 
 /* =========================================
-   TELA DE ENTRADA (HOME)
+   TELA DE ENTRADA (HOME) - ANIMAÇÕES PREMIUM
    ========================================= */
 #tela-entrada {
-    background: radial-gradient(circle at center, #2e1d12 0%, var(--cor-fundo-2) 100%);
+    /* Fundo com gradiente maior para podermos animar o movimento dele */
+    background: radial-gradient(circle at center, #2e1d12 0%, var(--cor-fundo-2) 80%);
+    background-size: 150% 150%;
+    animation: respirarFundo 8s ease-in-out infinite alternate;
     flex-direction: column;
 }
 
-.entrada-conteudo {
-    text-align: center;
-    animation: fadeInSlideUp 1.5s ease-out forwards;
+/* O fundo se movimenta suavemente como se estivesse respirando */
+@keyframes respirarFundo {
+    0% { background-position: center top; }
+    100% { background-position: center bottom; }
 }
+
+/* Bloco principal de conteúdo */
+.entrada-conteudo {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    /* A flutuação contínua só começa depois que os itens surgem (delay de 2s) */
+    animation: flutuarConteudo 4s ease-in-out 2s infinite alternate;
+}
+
+/* Efeito de gravidade zero (sobe e desce bem devagar) */
+@keyframes flutuarConteudo {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-10px); }
+}
+
+/* =========================================
+   ENTRADA EM CASCATA (STAGGERED REVEAL)
+   ========================================= */
+/* Escondemos tudo inicialmente (opacity: 0) e animamos a subida */
 
 .subtitulo-poetico {
     font-family: var(--fonte-titulos);
@@ -66,6 +90,9 @@ body {
     color: var(--cor-destaque);
     font-weight: 400;
     margin-bottom: -10px;
+    opacity: 0;
+    /* Aparece primeiro (delay 0.3s) */
+    animation: surgirSubindo 1s ease-out 0.3s forwards;
 }
 
 .titulo-principal {
@@ -76,6 +103,11 @@ body {
     margin-bottom: 15px;
     letter-spacing: 2px;
     text-shadow: 0 10px 30px rgba(232, 195, 125, 0.2);
+    opacity: 0;
+    /* Aqui está a mágica: ele sobe e depois de 2s começa a brilhar */
+    animation: 
+        surgirSubindo 1s ease-out 0.8s forwards, 
+        respirarBrilho 3s ease-in-out 2s infinite alternate;
 }
 
 .descricao {
@@ -83,6 +115,9 @@ body {
     color: var(--cor-texto-suave);
     margin-bottom: 40px;
     letter-spacing: 1px;
+    opacity: 0;
+    /* Aparece em terceiro (delay 1.3s) */
+    animation: surgirSubindo 1s ease-out 1.3s forwards;
 }
 
 .btn-elegante {
@@ -96,28 +131,68 @@ body {
     letter-spacing: 2px;
     border-radius: 30px;
     cursor: pointer;
-    transition: all 0.4s ease;
     box-shadow: 0 0 15px rgba(232, 195, 125, 0.1);
+    transition: all 0.4s ease;
+    opacity: 0;
+    /* Aparece por último (delay 1.8s) */
+    animation: surgirSubindo 1s ease-out 1.8s forwards;
 }
 
 .btn-elegante:hover {
     background: var(--cor-destaque);
     color: var(--cor-fundo-2);
     box-shadow: 0 0 25px rgba(232, 195, 125, 0.4);
-    transform: translateY(-3px);
+    transform: translateY(-3px) scale(1.05);
 }
 
+/* Animação Mestre: Faz as coisas surgirem de baixo para cima */
+@keyframes surgirSubindo {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Animação do Brilho do Título (Já tínhamos) */
+@keyframes respirarBrilho {
+    0% { text-shadow: 0 5px 15px rgba(232, 195, 125, 0.1); }
+    100% { text-shadow: 0 10px 40px rgba(232, 195, 125, 0.7); }
+}
+
+/* Partículas (Agora com efeito de piscar/cintilar) */
+.particulas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, var(--cor-destaque), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 50px 160px, rgba(255,255,255,0.6), rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 90px 40px, var(--cor-destaque), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 130px 180px, rgba(255,255,255,0.6), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 180px 90px, var(--cor-destaque), rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: flutuarParticulas 20s linear infinite;
+}
+
+/* As partículas sobem e ficam mais fortes/fracas imitando vagalumes ou estrelas */
+@keyframes flutuarParticulas {
+    0% { transform: translateY(0); opacity: 0.1; }
+    50% { opacity: 0.6; }
+    100% { transform: translateY(-200px); opacity: 0.1; }
+}
+
+/* Trava o rodapé na parte de baixo da tela */
 .rodape-marca {
     position: absolute;
     bottom: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.3);
     letter-spacing: 1px;
-}
-
-@keyframes fadeInSlideUp {
-    0% { opacity: 0; transform: translateY(30px); }
-    100% { opacity: 1; transform: translateY(0); }
 }
 
 /* =========================================

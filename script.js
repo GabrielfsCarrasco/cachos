@@ -10,6 +10,9 @@ const barraProgresso = document.getElementById('barra-progresso');
 const tempoAtualEl = document.getElementById('tempo-atual');
 const tempoTotalEl = document.getElementById('tempo-total');
 
+// Selecionando a capa para animar
+const capaArte = document.getElementById('vinil-giratorio')
+
 const btnAbrirLetras = document.getElementById('btn-abrir-letras');
 const btnFecharLetras = document.getElementById('btn-fechar-letras');
 const lyricsView = document.getElementById('lyrics-view');
@@ -18,21 +21,47 @@ const versos = Array.from(document.querySelectorAll('.verso'));
 let isPlaying = false;
 
 // ==========================================
-// TRANSIÇÃO DE TELA (HOME -> PLAYER)
+// TRANSIÇÃO DE TELA COM DELAY (HOME -> PLAYER)
 // ==========================================
+const textoBtn = document.getElementById('texto-btn');
+
 btnEntrar.addEventListener('click', () => {
-    // Esconde a tela de entrada
-    telaEntrada.classList.remove('tela-ativa');
-    telaEntrada.classList.add('tela-oculta');
+    // Se o botão já estiver carregando, não faz nada (evita clique duplo)
+    if (btnEntrar.classList.contains('carregando')) return;
+
+    // 1. Inicia a animação de carregamento
+    btnEntrar.classList.add('carregando');
     
-    // Mostra a tela do player
-    telaPlayer.classList.remove('tela-oculta');
-    telaPlayer.classList.add('tela-ativa');
+    // 2. Muda o texto pela primeira vez
+    textoBtn.textContent = "Aumente o som...";
     
-    // Inicia a música e atualiza o botão
-    audio.play();
-    isPlaying = true;
-    btnPlay.textContent = '⏸';
+    // 3. Muda o texto novamente após 1.5 segundos
+    setTimeout(() => {
+        textoBtn.textContent = "Prepare o coração...";
+    }, 1500);
+
+    // 4. Executa a transição de tela após 3.2 segundos
+    setTimeout(() => {
+        // Esconde a home e mostra o player
+        telaEntrada.classList.remove('tela-ativa');
+        telaEntrada.classList.add('tela-oculta');
+        
+        telaPlayer.classList.remove('tela-oculta');
+        telaPlayer.classList.add('tela-ativa');
+        
+        // Toca a música e gira o vinil
+        audio.play();
+        isPlaying = true;
+        btnPlay.textContent = '⏸';
+        capaArte.classList.add('animacao-girar');
+
+        // (Opcional) Reseta o botão caso ela recarregue a página
+        setTimeout(() => {
+            btnEntrar.classList.remove('carregando');
+            textoBtn.textContent = "Ouvir a Poesia";
+        }, 1000);
+
+    }, 3200); // 3200 milissegundos = 3.2 segundos de delay total
 });
 
 // ==========================================
@@ -55,9 +84,13 @@ btnPlay.addEventListener('click', () => {
     if (isPlaying) {
         audio.pause();
         btnPlay.textContent = '▶';
+        // Pausa o vinil
+        capaArte.classList.remove('animacao-girar');
     } else {
         audio.play();
         btnPlay.textContent = '⏸';
+        // Volta a girar o vinil
+        capaArte.classList.add('animacao-girar');
     }
     isPlaying = !isPlaying;
 });
@@ -114,6 +147,8 @@ versos.forEach(verso => {
             audio.play();
             btnPlay.textContent = '⏸';
             isPlaying = true;
+            // Garante que o vinil volte a girar se você clicar num verso enquanto estiver pausado
+            capaArte.classList.add('animacao-girar');
         }
     });
 });
