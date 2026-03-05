@@ -11,7 +11,7 @@ const tempoAtualEl = document.getElementById('tempo-atual');
 const tempoTotalEl = document.getElementById('tempo-total');
 
 // Selecionando a capa para animar
-const capaArte = document.getElementById('vinil-giratorio')
+const capaArte = document.getElementById('vinil-giratorio');
 
 const btnAbrirLetras = document.getElementById('btn-abrir-letras');
 const btnFecharLetras = document.getElementById('btn-fechar-letras');
@@ -20,48 +20,54 @@ const versos = Array.from(document.querySelectorAll('.verso'));
 
 let isPlaying = false;
 
+// Ícones em formato SVG
+const iconePlay = '<svg viewBox="0 0 24 24" width="35" height="35" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+const iconePause = '<svg viewBox="0 0 24 24" width="35" height="35" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+
+// ==========================================
+// FUNÇÃO PARA PINTAR A BARRINHA
+// ==========================================
+function atualizarCorBarra() {
+    // Calcula a porcentagem de 0 a 100
+    const porcentagem = (audio.currentTime / audio.duration) * 100;
+    
+    // Pinta a barrinha: Dourado até a porcentagem atual, cinza transparente no resto
+    barraProgresso.style.background = `linear-gradient(to right, var(--cor-destaque) ${porcentagem}%, rgba(255,255,255,0.1) ${porcentagem}%)`;
+}
+
 // ==========================================
 // TRANSIÇÃO DE TELA COM DELAY (HOME -> PLAYER)
 // ==========================================
 const textoBtn = document.getElementById('texto-btn');
 
 btnEntrar.addEventListener('click', () => {
-    // Se o botão já estiver carregando, não faz nada (evita clique duplo)
     if (btnEntrar.classList.contains('carregando')) return;
 
-    // 1. Inicia a animação de carregamento
     btnEntrar.classList.add('carregando');
-    
-    // 2. Muda o texto pela primeira vez
     textoBtn.textContent = "Aumente o som...";
     
-    // 3. Muda o texto novamente após 1.5 segundos
     setTimeout(() => {
         textoBtn.textContent = "Prepare o coração...";
     }, 1500);
 
-    // 4. Executa a transição de tela após 3.2 segundos
     setTimeout(() => {
-        // Esconde a home e mostra o player
         telaEntrada.classList.remove('tela-ativa');
         telaEntrada.classList.add('tela-oculta');
         
         telaPlayer.classList.remove('tela-oculta');
         telaPlayer.classList.add('tela-ativa');
         
-        // Toca a música e gira o vinil
         audio.play();
         isPlaying = true;
-        btnPlay.textContent = '⏸';
+        btnPlay.innerHTML = iconePause;
         capaArte.classList.add('animacao-girar');
 
-        // (Opcional) Reseta o botão caso ela recarregue a página
         setTimeout(() => {
             btnEntrar.classList.remove('carregando');
             textoBtn.textContent = "Ouvir a Poesia";
         }, 1000);
 
-    }, 3200); // 3200 milissegundos = 3.2 segundos de delay total
+    }, 3200); 
 });
 
 // ==========================================
@@ -83,23 +89,27 @@ audio.addEventListener('loadedmetadata', () => {
 btnPlay.addEventListener('click', () => {
     if (isPlaying) {
         audio.pause();
-        btnPlay.textContent = '▶';
-        // Pausa o vinil
+        btnPlay.innerHTML = iconePlay; 
         capaArte.classList.remove('animacao-girar');
     } else {
         audio.play();
-        btnPlay.textContent = '⏸';
-        // Volta a girar o vinil
+        btnPlay.innerHTML = iconePause; 
         capaArte.classList.add('animacao-girar');
     }
     isPlaying = !isPlaying;
 });
 
+// Acontece o tempo todo enquanto a música toca
 audio.addEventListener('timeupdate', () => {
     const tempoAtual = audio.currentTime;
     
     barraProgresso.value = tempoAtual;
     tempoAtualEl.textContent = formatarTempo(tempoAtual);
+    
+    // Chama a função que pinta a barrinha
+    if (!isNaN(audio.duration)) {
+        atualizarCorBarra();
+    }
 
     let versoAtivoIndex = -1;
     for (let i = 0; i < versos.length; i++) {
@@ -125,8 +135,10 @@ audio.addEventListener('timeupdate', () => {
     });
 });
 
+// Acontece quando você clica ou arrasta a barrinha
 barraProgresso.addEventListener('input', () => {
     audio.currentTime = barraProgresso.value;
+    atualizarCorBarra(); // Pinta a barrinha na hora que você arrasta
 });
 
 btnAbrirLetras.addEventListener('click', () => {
@@ -145,10 +157,10 @@ versos.forEach(verso => {
         audio.currentTime = tempo;
         if(!isPlaying) {
             audio.play();
-            btnPlay.textContent = '⏸';
             isPlaying = true;
-            // Garante que o vinil volte a girar se você clicar num verso enquanto estiver pausado
+            btnPlay.innerHTML = iconePause; 
             capaArte.classList.add('animacao-girar');
         }
+        atualizarCorBarra(); // Pinta a barrinha ao pular pela letra
     });
 });
