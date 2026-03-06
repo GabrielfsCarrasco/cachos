@@ -170,16 +170,28 @@
     </main>
 
     <aside id="modal-final" class="modal-agradecimento" aria-modal="true" role="dialog">
-        <div class="modal-conteudo">
+        <div class="modal-conteudo" style="position: relative;">
+            
+            <button onclick="fecharModal()" class="btn-fechar-modal" aria-label="Fechar mensagem">✖</button>
+
             <h3 class="subtitulo-poetico">Para você...</h3>
-            <p class="descricao" style="margin-top: 20px; color: #fff;">
+            <p class="descricao" style="margin-top: 15px; color: #fff;">
                 Obrigado por ser sempre a minha maior inspiração.
                 <br>
                 Cada nota e cada verso são por você e para você.
             </p>
-            <button onclick="fecharModal()" class="btn-elegante" style="margin-top: 30px;" aria-label="Fechar mensagem">
-                Com amor, Gabriel
-            </button>
+            
+            <div style="margin-top: 30px; display: flex; justify-content: center;">
+                <a href="music/Cachos.mp3" download="Cachos - Gabriel Carrasco.mp3" class="btn-download" aria-label="Baixar arquivo MP3 da música">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                    </svg>
+                    Baixar a Música
+                </a>
+            </div>
+
+            <p class="assinatura-modal" style="margin-top: 25px;">Com amor, Gabriel</p>
+
         </div>
     </aside>
 

@@ -160,3 +160,55 @@ input[type="range"]::-webkit-slider-runnable-track {
     border: 1px solid var(--cor-destaque); padding: 40px 30px; border-radius: 30px; text-align: center; max-width: 85%;
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
+
+/* Botão de Download no Modal */
+.btn-download {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(252, 163, 17, 0.15); /* Fundo transparente dourado */
+    color: var(--cor-destaque);
+    border: 1px solid var(--cor-destaque);
+    padding: 12px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-family: var(--fonte-titulos);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.btn-download:hover {
+    background: rgba(252, 163, 17, 0.4);
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(252, 163, 17, 0.3);
+}
+
+.btn-fechar-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s;
+}
+
+.btn-fechar-modal:hover {
+    color: var(--cor-destaque);
+    transform: scale(1.1);
+}
+
+/* A assinatura como rodapé poético */
+.assinatura-modal {
+    font-family: var(--fonte-titulos);
+    color: var(--cor-destaque);
+    font-size: 1.2rem;
+    font-style: italic;
+    opacity: 0.9;
+    letter-spacing: 1px;
+}

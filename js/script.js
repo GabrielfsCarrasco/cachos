@@ -53,13 +53,13 @@ btnAbrirCarta.addEventListener('click', () => {
     
     // Toca o instrumental
     if (audioFundo) { 
-        audioFundo.volume = 0.4; 
+        audioFundo.volume = 0.3; 
         audioFundo.play(); 
     }
     
     // Prepara o som de digitação para o navegador não bloquear depois
     if (audioDigitacao) { 
-        audioDigitacao.volume = 0.2; 
+        audioDigitacao.volume = 0.3; 
         audioDigitacao.play().then(() => audioDigitacao.pause()).catch(e => {}); 
     }
     
@@ -193,10 +193,53 @@ btnEntrar.addEventListener('click', () => {
 // ==========================================
 function formatarTempo(segundos) {
     if (isNaN(segundos) || segundos === Infinity) return "0:00";
-    const min = Math.floor(segundos / 60); 
-    const seg = Math.floor(segundos % 60);
+    
+    // A mágica: arredondamos os milissegundos de forma inteligente
+    const tempoExato = Math.round(segundos);
+    
+    const min = Math.floor(tempoExato / 60); 
+    const seg = tempoExato % 60;
+    
     return `${min}:${seg < 10 ? '0' : ''}${seg}`;
 }
+
+// ... (pule o atualizarCorBarra e o inicializarPlayer, deixe como estão) ...
+
+// A música tocando atualiza a barra
+audio.addEventListener('timeupdate', () => {
+    if (!isDragging) {
+        barraProgresso.value = audio.currentTime; 
+        
+        // Trava de segurança: o tempo atual NUNCA pode ser maior que a duração total
+        const tempoLimite = Math.min(audio.currentTime, audio.duration);
+        tempoAtualEl.textContent = formatarTempo(tempoLimite);
+        
+        atualizarCorBarra();
+    }
+
+    // Lógica das Letras subindo
+    let versoAtivoIndex = -1;
+    for (let i = 0; i < versos.length; i++) {
+        if (audio.currentTime >= parseFloat(versos[i].getAttribute('data-time'))) {
+            versoAtivoIndex = i;
+        } else {
+            break;
+        }
+    }
+    
+    versos.forEach((verso, index) => {
+        if (index === versoAtivoIndex) {
+            if (!verso.classList.contains('ativo')) { 
+                verso.classList.add('ativo'); 
+                if(lyricsView.classList.contains('aberta')) {
+                    verso.scrollIntoView({ behavior: 'smooth', block: 'center' }); 
+                }
+            }
+        } else { 
+            verso.classList.remove('ativo'); 
+        }
+    });
+});
 
 function atualizarCorBarra() {
     const tempoAtual = isDragging ? barraProgresso.value : audio.currentTime;
