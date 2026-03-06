@@ -1,0 +1,146 @@
+/* ==========================================
+   GLOBAL: Reset, Variáveis e Estrutura Base
+   ========================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --fonte-titulos: 'Playfair Display', serif;
+    --fonte-textos: 'Montserrat', sans-serif;
+
+    --cor-fundo-1: #291528;
+    --cor-fundo-2: #0F0811;
+
+    --cor-destaque: #FCA311;
+
+    --cor-texto: #F8F9FA;
+    --cor-texto-suave: #B59EAD;
+}
+
+body {
+    font-family: var(--fonte-textos);
+
+    background: linear-gradient(
+        135deg,
+        var(--cor-fundo-1) 0%,
+        var(--cor-fundo-2) 100%
+    );
+
+    color: var(--cor-texto);
+
+    height: 100dvh;
+    width: 100vw;
+
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    touch-action: pan-y;
+}
+
+/* ==========================================
+   SISTEMA DE TELAS (SPA)
+   ========================================== */
+
+.tela {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: opacity 1s ease;
+}
+
+.tela-ativa {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    z-index: 20;
+}
+
+.tela-oculta {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ==========================================
+   BOTÃO GLOBAL
+   ========================================== */
+
+.btn-elegante {
+
+    background: transparent;
+
+    border: 1px solid var(--cor-destaque);
+    color: var(--cor-destaque);
+
+    padding: 15px 40px;
+
+    font-size: 1.1rem;
+
+    font-family: var(--fonte-textos);
+
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+    border-radius: 30px;
+
+    cursor: pointer;
+
+    box-shadow: 0 0 15px rgba(232, 195, 125, 0.1);
+
+    transition: all 0.4s ease;
+}
+
+.btn-elegante:hover {
+
+    background: var(--cor-destaque);
+    color: var(--cor-fundo-2);
+
+    box-shadow: 0 0 25px rgba(232, 195, 125, 0.4);
+
+    transform: translateY(-3px) scale(1.05);
+}
+
+.oculto {
+    display: none !important;
+}
+
+/* ==========================================
+   RODAPÉ
+   ========================================== */
+
+.rodape-marca {
+
+    position: absolute;
+
+    bottom: 30px;
+    left: 0;
+
+    width: 100%;
+
+    text-align: center;
+
+    z-index: 1;
+
+    font-size: 0.8rem;
+
+    color: rgba(255, 255, 255, 0.3);
+
+    letter-spacing: 1px;
+}

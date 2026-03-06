@@ -2,129 +2,189 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>Cachos - Gabriel Carrasco</title>
+
+    <meta name="description" content="Uma poesia transformada em melodia. Feito com amor.">
+    <meta name="author" content="Gabriel Carrasco">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Cachos - Gabriel Carrasco">
+    <meta property="og:description" content="Uma poesia transformada em melodia. Ouça agora.">
+    <meta property="og:image" content="assets/banner.png">
+    <meta property="og:site_name" content="Poesia Cachos">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favcon.png">
+    <link rel="apple-touch-icon" href="assets/favcon.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/animacoes.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/player.css">
 </head>
 <body>
 
-    <div id="tela-entrada" class="tela tela-ativa">
-        <div class="particulas"></div>
+    <audio id="musica-fundo" src="music/Cachos (instrumental).mp3" loop preload="auto"></audio>
+    <audio id="som-digitacao" src="https://actions.google.com/sounds/v1/office/keyboard_typing_fast.ogg?hl=pt-br" loop preload="auto"></audio>
+    <audio id="musica" src="music/Cachos.mp3" preload="metadata"></audio>
+
+    <main>
         
-        <div class="entrada-conteudo">
-            <h3 class="subtitulo-poetico">Para a dona dos...</h3>
-            <h1 class="titulo-principal">Cachos</h1>
-            <p class="descricao">Uma poesia transformada em melodia.</p>
-            
-            <button id="btn-entrar" class="btn-elegante">
-                <span id="texto-btn">Ouvir a Poesia</span>
+        <section id="tela-zero" class="tela-zero-container" aria-label="Abertura da Carta">
+            <h3 class="subtitulo-poetico" style="margin-bottom: 30px;">
+                Tenho algo para te contar...
+            </h3>
+            <button id="btn-abrir-carta" class="btn-carta" aria-label="Abrir carta">
+                <div class="wrapper-carta">
+                    <svg viewBox="0 0 24 24" class="icone-carta" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                        <path d="M12 14.5c.5 0 1-.2 1.4-.6L22 7V6l-10 7L2 6v1l8.6 6.9c.4.4.9.6 1.4.6z" fill="var(--cor-destaque)" opacity="0.3"/>
+                        <path d="M12 13c-1-1.5-3-1.5-3 .5 0 1.5 3 3 3 3s3-1.5 3-3c0-2-2-2-3-.5z" fill="var(--cor-destaque)"/>
+                    </svg>
+                </div>
             </button>
-        </div>
-        <div class="rodape-marca">
-            <p>Com amor, Seu Namorado</p>
-        </div>
-    </div>
+        </section>
 
-    <div id="tela-player" class="tela tela-oculta">
-        <div class="player-app">
-            <div class="main-view">
-                <div class="art-container">
-                <div class="textura-vinil" id="vinil-giratorio"></div>
-
-                <div class="selo-vinil">
-                    
-                    <div class="furo-vinil"></div>
-
-                    <div class="equalizador">
-                        <div class="barra"></div>
-                        <div class="barra"></div>
-                        <div class="barra"></div>
-                        <div class="barra-espaco"></div> <div class="barra"></div>
-                        <div class="barra"></div>
-                        <div class="barra"></div>
-                    </div>
-
-                </div>
-            </div>
+        <section id="tela-entrada" class="tela tela-ativa" aria-label="História Contada">
+            <div class="particulas" aria-hidden="true"></div>
+            
+            <article class="entrada-conteudo historia-container">
+                <h2 id="texto-historia" class="texto-historia"></h2>
                 
-                <div class="info">
-                    <h2>Cachos</h2>
-                    <p>Gabriel Carrasco</p>
-                </div>
+                <header id="area-botao" class="oculto">
+                    <h3 id="digita-subtitulo" class="subtitulo-poetico"></h3>
+                    <h1 id="digita-titulo" class="titulo-principal"></h1>
+                    <p id="digita-descricao" class="descricao"></p>
+                    <button id="btn-entrar" class="btn-elegante oculto">
+                        <span id="texto-btn">Ouvir a Poesia</span>
+                    </button>
+                </header>
+            </article>
 
-                <div class="progress-container">
-                    <span class="time" id="tempo-atual">0:00</span>
-                    <input type="range" id="barra-progresso" value="0" min="0" step="1">
-                    <span class="time" id="tempo-total">0:00</span>
-                </div>
+            <footer class="rodape-marca">
+                <p>Com amor, Seu Namorado</p>
+            </footer>
+        </section>
 
-                <audio id="musica" src="Cachos.mp3"></audio>
+        <section id="tela-player" class="tela tela-oculta" aria-label="Player de Música">
+            <article class="player-app">
+                <div class="main-view">
+                    
+                    <figure class="art-container" aria-label="Disco de Vinil Girando">
+                        <div class="textura-vinil" id="vinil-giratorio"></div>
+                        <div class="selo-vinil">
+                            <div class="furo-vinil"></div>
+                            <div class="equalizador" aria-hidden="true">
+                                <div class="barra"></div>
+                                <div class="barra"></div>
+                                <div class="barra"></div>
+                                <div class="barra-espaco"></div>
+                                <div class="barra"></div>
+                                <div class="barra"></div>
+                                <div class="barra"></div>
+                            </div>
+                        </div>
+                    </figure>
 
-                <div class="controls">
-                    <button class="btn-play" id="btn-play">
-                        <svg viewBox="0 0 24 24" width="35" height="35" fill="currentColor">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
+                    <header class="info">
+                        <h2>Cachos</h2>
+                        <p>Gabriel Carrasco</p>
+                    </header>
+
+                    <nav class="progress-container" aria-label="Controle de tempo da música">
+                        <span class="time" id="tempo-atual">0:00</span>
+                        <input type="range" id="barra-progresso" value="0" min="0" step="any" aria-label="Progresso da música">
+                        <span class="time" id="tempo-total">0:00</span>
+                    </nav>
+
+                    <nav class="controls" aria-label="Controles de reprodução">
+                        <button class="btn-play" id="btn-play" aria-label="Tocar ou pausar">
+                            <svg viewBox="0 0 24 24" width="35" height="35" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
+                    </nav>
+
+                    <button class="btn-lyrics" id="btn-abrir-letras" aria-expanded="false" aria-controls="lyrics-view">
+                        Ver Letras
                     </button>
                 </div>
 
-                <button class="btn-lyrics" id="btn-abrir-letras">Ver Letras</button>
-            </div>
+                <aside class="lyrics-view" id="lyrics-view" aria-label="Letras da música">
+                    <header class="lyrics-header">
+                        <h3>Letras</h3>
+                        <button class="btn-fechar" id="btn-fechar-letras" aria-label="Fechar letras">✖</button>
+                    </header>
 
-            <div class="lyrics-view" id="lyrics-view">
-                <div class="lyrics-header">
-                    <h3>Letras</h3>
-                    <button class="btn-fechar" id="btn-fechar-letras">✖</button>
-                </div>
-                
-                <div class="letras-container" id="container-letras">
-                    <p class="verso" data-time="13">Ondulados que formam cachos.</p>
-                    <p class="verso" data-time="16">Que outrora já foram dourados.</p>
-                    <p class="verso" data-time="19.5">Mas também castanhos claros.</p>
-                    <p class="verso" data-time="24">Muitos tons, mas a mesma dona.</p>
+                    <div class="letras-container" id="container-letras">
+                        <p class="verso" data-time="13">Ondulados que formam cachos.</p>
+                        <p class="verso" data-time="16">Que outrora já foram dourados.</p>
+                        <p class="verso" data-time="19.5">Mas também castanhos claros.</p>
+                        <p class="verso" data-time="24">Muitos tons, mas a mesma dona.</p>
 
-                    <p class="verso" data-time="29.5">Essas voltas me hipnotizaram.</p>
-                    <p class="verso" data-time="34">Incontáveis vezes, me perdi.</p>
-                    <p class="verso" data-time="38">Quão lindos, quão cheirosos.</p>
-                    <p class="verso" data-time="40">Como não me apaixonar?</p>
+                        <p class="verso" data-time="29.5">Essas voltas me hipnotizaram.</p>
+                        <p class="verso" data-time="34">Incontáveis vezes, me perdi.</p>
+                        <p class="verso" data-time="38">Quão lindos, quão cheirosos.</p>
+                        <p class="verso" data-time="40">Como não me apaixonar?</p>
 
-                    <p class="verso" data-time="46.5">Encaracolando todo meu coração.</p>
-                    <p class="verso" data-time="53">Já me ganhou, quando chegou.</p>
-                    <p class="verso" data-time="59">Continuo preso nesse encaracolado.</p>
-                    <p class="verso" data-time="65">Seria só pelos cachos? Claro que não.</p>
+                        <p class="verso" data-time="46.5">Encaracolando todo meu coração.</p>
+                        <p class="verso" data-time="53">Já me ganhou, quando chegou.</p>
+                        <p class="verso" data-time="59">Continuo preso nesse encaracolado.</p>
+                        <p class="verso" data-time="65">Seria só pelos cachos? Claro que não.</p>
 
-                    <p class="verso" data-time="77">A dona dos cachos é quem tem.</p>
-                    <p class="verso" data-time="80">Meus olhares, falas, sorrisos e</p>
-                    <p class="verso" data-time="84">Meu simples e humilde coração.</p>
-                    <p class="verso" data-time="90">Que entreguei sem querer devolução.</p>
+                        <p class="verso" data-time="77">A dona dos cachos é quem tem.</p>
+                        <p class="verso" data-time="80">Meus olhares, falas, sorrisos e</p>
+                        <p class="verso" data-time="84">Meu simples e humilde coração.</p>
+                        <p class="verso" data-time="90">Que entreguei sem querer devolução.</p>
 
-                    <p class="verso" data-time="96.5">Poderia existir alguma devolução?</p>
-                    <p class="verso" data-time="102.5">Acredito que poderia ser mais fácil.</p>
-                    <p class="verso" data-time="106.5">Na dor ou na frustração, contudo, não!</p>
-                    <p class="verso" data-time="113">Cultivar e cuidar são a melhor decisão.</p>
+                        <p class="verso" data-time="96.5">Poderia existir alguma devolução?</p>
+                        <p class="verso" data-time="102.5">Acredito que poderia ser mais fácil.</p>
+                        <p class="verso" data-time="106.5">Na dor ou na frustração, contudo, não!</p>
+                        <p class="verso" data-time="113">Cultivar e cuidar são a melhor decisão.</p>
 
-                    <p class="verso" data-time="132">As ondulações, cores e tamanhos.</p>
-                    <p class="verso" data-time="138">Pode ser que existam muitos cachos.</p>
-                    <p class="verso" data-time="145.5">Talvez mais do que posso contar.</p>
-                    <p class="verso" data-time="151">Muitos cachos, mas só uma de você.</p>
+                        <p class="verso" data-time="132">As ondulações, cores e tamanhos.</p>
+                        <p class="verso" data-time="138">Pode ser que existam muitos cachos.</p>
+                        <p class="verso" data-time="145.5">Talvez mais do que posso contar.</p>
+                        <p class="verso" data-time="151">Muitos cachos, mas só uma de você.</p>
 
-                    <p class="verso" data-time="157">A dona dos cachos é quem tem.</p>
-                    <p class="verso" data-time="160">Meus olhares, falas, sorrisos e</p>
-                    <p class="verso" data-time="163">Meu simples e humilde coração.</p>
-                    <p class="verso" data-time="171">Que entreguei sem querer devolução.</p>
+                        <p class="verso" data-time="157">A dona dos cachos é quem tem.</p>
+                        <p class="verso" data-time="160">Meus olhares, falas, sorrisos e</p>
+                        <p class="verso" data-time="163">Meu simples e humilde coração.</p>
+                        <p class="verso" data-time="171">Que entreguei sem querer devolução.</p>
 
-                    <p class="verso" data-time="175.5">Poderia existir alguma devolução?</p>
-                    <p class="verso" data-time="182">Acredito que poderia ser mais fácil.</p>
-                    <p class="verso" data-time="187.5">Na dor ou na frustração, contudo, não!</p>
-                    <p class="verso" data-time="194">Cultivar e cuidar são a melhor decisão.</p>
-                </div>
-            </div>
+                        <p class="verso" data-time="175.5">Poderia existir alguma devolução?</p>
+                        <p class="verso" data-time="182">Acredito que poderia ser mais fácil.</p>
+                        <p class="verso" data-time="187.5">Na dor ou na frustração, contudo, não!</p>
+                        <p class="verso" data-time="194">Cultivar e cuidar são a melhor decisão.</p>
+                    </div>
+                </aside>
+            </article>
+        </section>
+
+    </main>
+
+    <aside id="modal-final" class="modal-agradecimento" aria-modal="true" role="dialog">
+        <div class="modal-conteudo">
+            <h3 class="subtitulo-poetico">Para você...</h3>
+            <p class="descricao" style="margin-top: 20px; color: #fff;">
+                Obrigado por ser sempre a minha maior inspiração.
+                <br>
+                Cada nota e cada verso são por você e para você.
+            </p>
+            <button onclick="fecharModal()" class="btn-elegante" style="margin-top: 30px;" aria-label="Fechar mensagem">
+                Com amor, Gabriel
+            </button>
         </div>
-    </div>
+    </aside>
 
-    <script src="script.js"></script>
+    <script src="js/historia.js"></script>
+    <script src="js/script.js"></script>
+
 </body>
 </html>

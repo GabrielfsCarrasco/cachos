@@ -1,0 +1,162 @@
+/* ==========================================
+   PLAYER: GLASSMORPHISM COM A PALETA ORIGINAL
+   ========================================== */
+
+.player-app {
+    width: 100%; 
+    height: 100dvh;
+    /* Trazendo o gradiente Ameixa/Roxo Escuro de volta */
+    background: radial-gradient(circle at center, var(--cor-fundo-1) 0%, var(--cor-fundo-2) 100%);
+    position: relative; 
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* O CARTÃO DE VIDRO FOFO E COLORIDO */
+.main-view { 
+    width: 88vw;
+    height: 90dvh;
+    background: rgba(255, 255, 255, 0.05); 
+    backdrop-filter: blur(25px); 
+    -webkit-backdrop-filter: blur(25px);
+    /* Borda com um toque dourado sutil */
+    border: 1px solid rgba(252, 163, 17, 0.2); 
+    border-radius: 40px; 
+    padding: 5vh 6vw; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-evenly; 
+    align-items: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6); 
+}
+
+/* O VINIL SUSPENSO */
+.art-container {
+    width: 65vw; 
+    max-width: 280px; 
+    aspect-ratio: 1 / 1; 
+    border-radius: 50%; 
+    position: relative;
+    background: #000; 
+    /* Sombra Dourada em volta do disco */
+    box-shadow: 0 20px 50px rgba(252, 163, 17, 0.25), inset 0 0 15px rgba(255,255,255,0.05);
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    border: 1px solid rgba(252, 163, 17, 0.1);
+}
+
+.textura-vinil {
+    position: absolute; inset: 4px; border-radius: 50%; z-index: 1;
+    background: 
+        repeating-radial-gradient(circle, transparent 0, rgba(255,255,255,0.02) 1px, transparent 2px),
+        conic-gradient(from 0deg, transparent 0%, rgba(255,255,255,0.08) 15%, transparent 35%, rgba(255,255,255,0.08) 65%, transparent 85%, transparent 100%);
+}
+
+.selo-vinil {
+    position: absolute; width: 45%; height: 45%; border-radius: 50%; z-index: 2;
+    background: linear-gradient(135deg, var(--cor-destaque) 0%, #b47200 100%);
+    border: 2px solid #000; 
+    display: flex; justify-content: center; align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.furo-vinil {
+    position: absolute; width: 12px; height: 12px; background: var(--cor-fundo-2);
+    border-radius: 50%; border: 1px solid rgba(0,0,0,0.8); z-index: 3;
+}
+
+/* EQUALIZADOR FOFO */
+.equalizador { display: flex; align-items: center; gap: 4px; height: 16px; z-index: 2; }
+.barra-espaco { width: 12px; }
+.barra { width: 4px; height: 8px; background-color: var(--cor-fundo-2); border-radius: 4px; animation: pularBarra 0.8s infinite alternate ease-in-out; }
+.barra:nth-child(2) { animation-delay: 0.2s; }
+.barra:nth-child(3) { animation-delay: 0.4s; }
+
+/* INFORMAÇÕES - A COR VOLTOU! */
+.info { text-align: center; width: 100%; margin-top: -1vh; }
+.info h2 { font-family: var(--fonte-titulos); font-size: clamp(2.2rem, 8vw, 2.8rem); color: var(--cor-destaque); text-shadow: 0 0 15px rgba(252, 163, 17, 0.3); margin-bottom: 5px; }
+.info p { font-size: 1.1rem; color: var(--cor-texto-suave); letter-spacing: 1px; }
+
+/* ==========================================
+   BARRINHA DE PROGRESSO (AGORA 100% LISA)
+   ========================================== */
+.progress-container { display: flex; align-items: center; width: 100%; justify-content: space-between; gap: 12px; }
+.time { font-size: 0.8rem; color: var(--cor-texto-suave); width: 40px; text-align: center; font-variant-numeric: tabular-nums; }
+
+input[type="range"] { 
+    -webkit-appearance: none; 
+    width: 100%; height: 6px; 
+    background: rgba(255,255,255,0.05); 
+    border-radius: 10px; outline: none; 
+}
+
+input[type="range"]::-webkit-slider-thumb { 
+    -webkit-appearance: none; 
+    width: 16px; height: 16px; 
+    border-radius: 50%; 
+    background: var(--cor-destaque); 
+    box-shadow: 0 0 10px var(--cor-destaque); 
+    /* Isso corrige o espaçamento visual do botão */
+    margin-top: -5px; 
+    cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 6px; border-radius: 10px;
+}
+
+/* CONTROLES - BOLHAS DOURADAS E ROXAS */
+.controls { width: 100%; display: flex; justify-content: center; align-items: center; }
+.btn-play {
+    width: 80px; height: 80px; border-radius: 50%; 
+    background: rgba(252, 163, 17, 0.15); 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(252, 163, 17, 0.4); 
+    color: var(--cor-destaque);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3); 
+    display: flex; justify-content: center; align-items: center; cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-play:active { transform: scale(0.9); background: rgba(252, 163, 17, 0.3); }
+
+/* BOTÃO DE LETRAS */
+.btn-lyrics {
+    background: rgba(255, 255, 255, 0.05); color: var(--cor-destaque); 
+    border: 1px solid rgba(252, 163, 17, 0.3);
+    backdrop-filter: blur(5px);
+    padding: 12px 30px; border-radius: 30px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-lyrics:hover { background: rgba(252, 163, 17, 0.15); }
+
+/* TELA DE LETRAS DE VIDRO */
+.lyrics-view {
+    position: absolute; top: 100%; left: 0; width: 100%; height: 100%;
+    background: rgba(41, 21, 40, 0.8); backdrop-filter: blur(25px);
+    display: flex; flex-direction: column; transition: top 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 10;
+    border-radius: 40px; 
+}
+.lyrics-view.aberta { top: 0; }
+.lyrics-header { padding: 25px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(252, 163, 17, 0.2); z-index: 11; }
+.lyrics-header h3 { font-family: var(--fonte-titulos); font-size: 1.5rem; color: var(--cor-destaque); }
+.btn-fechar { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); color: var(--cor-texto-suave); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+.letras-container { flex: 1; padding: 20px 30px 50vh 30px; overflow-y: auto; scroll-behavior: smooth; }
+.letras-container::-webkit-scrollbar { display: none; }
+.verso { font-family: var(--fonte-titulos); font-size: clamp(1.4rem, 5vw, 1.8rem); line-height: 1.5; color: rgba(255,255,255,0.2); margin-bottom: 30px; transition: all 0.4s ease; text-align: center; }
+.verso.ativo { color: var(--cor-destaque); transform: scale(1.05); text-shadow: 0 0 15px rgba(252, 163, 17, 0.4); }
+
+/* MODAL DE AGRADECIMENTO FOFO E COLORIDO */
+.modal-agradecimento {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 8, 17, 0.8); backdrop-filter: blur(15px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 999; opacity: 0; visibility: hidden; transition: 0.5s ease;
+}
+.modal-agradecimento.ativo { opacity: 1; visibility: visible; }
+.modal-conteudo {
+    background: rgba(41, 21, 40, 0.7); backdrop-filter: blur(25px);
+    border: 1px solid var(--cor-destaque); padding: 40px 30px; border-radius: 30px; text-align: center; max-width: 85%;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}

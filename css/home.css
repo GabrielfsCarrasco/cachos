@@ -1,0 +1,115 @@
+/* ==========================================
+   HOME: Tela Zero, Partículas e História
+   ========================================== */
+.tela-zero-container {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
+    background: var(--cor-fundo-1);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    z-index: 100; transition: opacity 1.5s ease-in-out;
+}
+
+/* ==========================================
+   BOTÃO CARTA (Ícone Clicável)
+   ========================================== */
+.btn-carta {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px;
+    transition: transform 0.3s ease;
+    -webkit-tap-highlight-color: transparent; 
+}
+
+.btn-carta:hover, .btn-carta:active {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 15px rgba(232, 195, 125, 0.6));
+}
+
+.wrapper-carta {
+    width: 80px;
+    height: 80px;
+    animation: flutuarCarta 3s ease-in-out infinite; 
+}
+
+.icone-carta {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: var(--cor-destaque);
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+#tela-entrada {
+    background: radial-gradient(circle at center, #2e1d12 0%, var(--cor-fundo-2) 80%);
+    background-size: 150% 150%;
+    animation: respirarFundo 8s ease-in-out infinite alternate;
+    flex-direction: column;
+}
+
+.particulas {
+    position: absolute; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0; opacity: 0.4;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, var(--cor-destaque), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 50px 160px, rgba(255,255,255,0.6), rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 90px 40px, var(--cor-destaque), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 130px 180px, rgba(255,255,255,0.6), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 180px 90px, var(--cor-destaque), rgba(0,0,0,0));
+    background-repeat: repeat; background-size: 200px 200px;
+    animation: flutuarParticulas 15s linear infinite;
+}
+
+.entrada-conteudo {
+    position: relative; z-index: 1; text-align: center;
+    animation: flutuarConteudo 4s ease-in-out 2s infinite alternate;
+}
+
+.historia-container {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; min-height: 200px; 
+}
+
+.texto-historia {
+    font-family: var(--fonte-titulos); 
+    font-size: clamp(1.3rem, 5vw, 2rem); /* Texto encolhe se a tela for minúscula */
+    font-weight: 400; 
+    color: var(--cor-destaque);
+    text-align: center; 
+    line-height: 1.5; 
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out; 
+    padding: 0 8vw; /* Margem lateral baseada na largura da tela */
+}
+
+.titulo-principal {
+    font-family: var(--fonte-titulos); 
+    font-size: clamp(3rem, 15vw, 5rem); /* Título se ajusta sozinho */
+    font-weight: 700;
+    color: #fff; 
+    margin-bottom: 15px; 
+    letter-spacing: 2px;
+    text-shadow: 0 10px 30px rgba(232, 195, 125, 0.2); 
+    opacity: 1;
+}
+
+.subtitulo-poetico {
+    font-family: var(--fonte-titulos); 
+    font-style: italic; 
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
+    color: var(--cor-destaque); 
+    font-weight: 400; 
+    margin-bottom: -5px; 
+    opacity: 1;
+}
+
+.descricao {
+    font-size: clamp(0.9rem, 3vw, 1rem); 
+    color: var(--cor-texto-suave);
+    margin-bottom: 40px; 
+    letter-spacing: 1px; 
+    opacity: 1;
+    padding: 0 20px;
+}
